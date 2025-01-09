@@ -42,4 +42,6 @@ for i in range(2, len(nums)):
 print("Số lớn nhất là:", largest) 
 print("Số lớn nhì là:", second_largest) 
 
+
 # Bài tập two-sums 
+
