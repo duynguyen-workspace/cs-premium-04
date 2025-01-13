@@ -27,8 +27,8 @@ def measure_time(sort_function, arr):
     return end_time - start_time
 
 #? Tạo 1 mảng random các giá trị
-array_size = 1000000 # 1000^2
-random_list = [random.randint(0, 1000000) for _ in range(array_size)] # 0 -> 999999
+array_size = 100000 
+random_list = [random.randint(0, 100000) for _ in range(array_size)] # 0 -> 999999
 
 #? Copy giá trị mảng random vào từng mảng riêng để thực hiện thuật toán sắp xếp
 bubble_list = random_list.copy()
@@ -38,7 +38,7 @@ merge_list = random_list.copy()
 quick_list = random_list.copy()
 
 #? So sánh tốc độ từng loại
-print("Sắp xếp mảng với 1tr giá trị khác nhau")
+print("Sắp xếp mảng có 100,000 phần tử:")
 print(f"Bubble Sort: {measure_time(bubble_sort, bubble_list):.6f}s")
 print(f"Selection Sort: {measure_time(selection_sort, selection_list):.6f}s")
 print(f"Insertion Sort: {measure_time(insertion_sort, insertion_list):.6f}s")
