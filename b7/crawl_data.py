@@ -46,7 +46,7 @@ params = {
 }
 
 # TODO: BÀI TẬP 1 - Lấy dữ liệu của 1 danh mục, lấy từ trang số 1 -> n
-pages = 20
+pages = 5
 
 # TODO: BÀI TẬP 2: lấy dữ liệu của 5 danh mục (mỗi danh mục lấy khoảng 5 trang), lấy đến khi nào file json có khoảng 3000 dữ liệu
 category_list = [2549, 1801, 1, 8322, 1975, 1686]
@@ -54,7 +54,7 @@ category_list = [2549, 1801, 1, 8322, 1975, 1686]
 product_list = []
 
 for category in category_list:
-    if len(product_list) >= 3000: #! nếu tới 3000 sản phẩm -> dừng vòng lặp
+    if len(product_list) >= 1000: #! nếu tới 1000 sản phẩm -> dừng vòng lặp
         print("Dừng cào dữ liệu tại category!!!")
         break
     
@@ -63,7 +63,7 @@ for category in category_list:
     print(f"* Đang lấy dữ liệu của category - {category}... *")
 
     for i in range(pages): # 0 -> 5
-        if len(product_list) >= 3000: #! nếu tới 3000 sản phẩm -> dừng vòng lặp
+        if len(product_list) >= 1000: #! nếu tới 1000 sản phẩm -> dừng vòng lặp
             print("Dừng cào dữ liệu tại trang!!!")
             break
         
@@ -100,7 +100,7 @@ for category in category_list:
         
         
         #? Delay quá trình gọi API
-        delay = random.randrange(5, 11) # delay: 5s -> 10s
+        delay = random.randrange(1, 11) # delay: 1s -> 10s
         
         print(f"--- Dừng cào dữ liệu trong {delay}s. ---")
         time.sleep(delay)

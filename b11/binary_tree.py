@@ -13,7 +13,7 @@ class BinaryTree:
         if self.root == None:
             self.root = Node(key = value)
         else:
-            self._insert_recursive(self.root, value)
+            self.root = self._insert_recursive(self.root, value)
             
         # print(f"Thêm thành công {value}")
         
@@ -53,6 +53,45 @@ class BinaryTree:
                 self._search_recursive(node.left, search_value)
             else:
                 self._search_recursive(node.right, search_value)
+    
+    """
+    PHƯƠNG THỨC XOÁ 
+    @param
+    + key: gía trị muốn xoá
+    """
+    def delete(self, key):
+        """Xóa một phần tử trong BST"""
+        self.root = self._delete_recursive(self.root, key)
+
+    def _delete_recursive(self, node, key):
+        if node is None:
+            return node  # Không tìm thấy giá trị, trả về chính nó
+
+        # Tìm nút cần xóa
+        if key < node.key:
+            node.left = self._delete_recursive(node.left, key)
+        elif key > node.key:
+            node.right = self._delete_recursive(node.right, key)
+        else:
+            # Trường hợp 1: Nút không có con hoặc chỉ có một con
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            
+            # Trường hợp 2: Nút có hai con
+            # Tìm Inorder Successor (nút nhỏ nhất trong cây con phải)
+            min_larger_node = self._min_value_node(node.right)
+            node.key = min_larger_node.key  # Gán giá trị mới
+            node.right = self._delete_recursive(node.right, min_larger_node.key)  # Xóa nút thay thế
+
+        return node
+
+    def _min_value_node(self, node):
+        """Tìm nút có giá trị nhỏ nhất trong cây con phải"""
+        while node.left:
+            node = node.left
+        return node
     
     """
     PHƯƠNG THỨC DUYỆT CÂY 
