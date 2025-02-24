@@ -1,0 +1,62 @@
+[
+    {
+        "id": 582875268,
+        "name": "Sony Xperia 4061049",
+        "price": 44193564,
+        "category": "House"
+    },
+    {
+        "id": 708927122,
+        "name": "Eggs 837236",
+        "price": 49315706,
+        "category": "Bike"
+    },
+    {
+        "id": 261869748,
+        "name": "Nokia 429168",
+        "price": 9868224,
+        "category": "Watch"
+    },
+    {
+        "id": 323782184,
+        "name": "OnePlus 2642512",
+        "price": 7477747,
+        "category": "Beauty"
+    },
+    {
+        "id": 730608594,
+        "name": "Apple iPhone 2025919",
+        "price": 17682692,
+        "category": "House"
+    },
+    {
+        "id": 466075644,
+        "name": "Nokia 4481045",
+        "price": 5241247,
+        "category": "Food"
+    },
+    {
+        "id": 69513903,
+        "name": "Google Pixel 2250542",
+        "price": 13447941,
+        "category": "House"
+    },
+    {
+        "id": 859007761,
+        "name": "Sony Xperia 1369781",
+        "price": 27979567,
+        "category": "House"
+    },
+    {
+        "id": 875755478,
+        "name": "Nokia 587773",
+        "price": 16114352,
+        "category": "Fashion"
+    },
+    {
+        "id": 939493405,
+        "name": "LG G 182982",
+        "price": 27999418,
+        "category": "Food"
+    }
+]
