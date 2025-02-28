@@ -1,11 +1,10 @@
-import json
-
 class AVLNode:
-    def __init__(self, value):
-        self.key = value
+    def __init__(self, product):
+        self.key = product["price"]
         self.left = None
         self.right = None
         self.height = 1
+        self.info = [product]
         
 class AVLTree:
     def __init__(self):
@@ -73,27 +72,27 @@ class AVLTree:
         # Trả về giá trị cây vừa cân bằng
         return right_child
     
-    def insert(self, value):
+    def insert(self, product):
         # Khi chưa có nút rễ -> mình sẽ gán giá trị của nút rễ là 1 node mới
         if self.root == None:
-            self.root = AVLNode(value)
+            self.root = AVLNode(product)
         else:
-            self.root = self._insert_recursive(self.root, value)
+            self.root = self._insert_recursive(self.root, product)
             
         # print(f"Thêm thành công {value}")
         
-    def _insert_recursive(self, node, value):
+    def _insert_recursive(self, node, product):
         #! Khi chưa có con
         if not node:
-            return AVLNode(value)
+            return AVLNode(product)
 
         #* Khi phát hiện có nút đang tồn tại
-        if value < node.key:
-            node.left = self._insert_recursive(node.left, value)
-        elif value > node.key:
-            node.right = self._insert_recursive(node.right, value)
+        if product["price"] < node.key:
+            node.left = self._insert_recursive(node.left, product)
+        elif product["price"] > node.key:
+            node.right = self._insert_recursive(node.right, product)
         else:
-            return node
+            node.info.append(product)
         
         # Cập nhật chiều cao tại vị trí nút được thêm vào
         self.update_height(node)
@@ -102,22 +101,22 @@ class AVLTree:
         balance = self.get_balance(node)
         
         #? TH1: lệch trái - trái
-        if (balance > 1 and value < node.left.key):
-            print(f"Cây bị lệch trái - trái khi thêm nút: ({value})")
+        if (balance > 1 and product["price"] < node.left.key):
+            print(f"Cây bị lệch trái - trái khi thêm nút: ({product["price"]})")
             
             # Lệch trái -> Xoay phải
             return self.right_rotate(node)
         
         #? TH2: lệch phải - phải
-        if (balance < -1 and value > node.right.key):
-            print(f"Cây bị lệch phải - phải khi thêm nút: ({value})")
+        if (balance < -1 and product["price"] > node.right.key):
+            print(f"Cây bị lệch phải - phải khi thêm nút: ({product["price"]})")
 
             # Lệch phải -> Xoay trái
             return self.left_rotate(node)
         
         #? TH3: lệch trái - phải
-        if (balance > 1 and value > node.left.key):
-            print(f"Cây bị lệch phải - phải khi thêm nút: ({value})")
+        if (balance > 1 and product["price"] > node.left.key):
+            print(f"Cây bị lệch phải - phải khi thêm nút: ({product["price"]})")
 
             # B1 -> Xoay trái nút gần kề
             node.left = self.left_rotate(node.left)
@@ -127,8 +126,8 @@ class AVLTree:
 
         
         #? TH4: lệch phải - trái
-        if (balance < -1 and value < node.right.key):
-            print(f"Cây bị lệch phải - trái khi thêm nút: ({value})")
+        if (balance < -1 and product["price"] < node.right.key):
+            print(f"Cây bị lệch phải - trái khi thêm nút: ({product["price"]})")
 
             # B1 -> Xoay phải nút gần kề
             node.right = self.right_rotate(node.right)
@@ -151,17 +150,27 @@ class AVLTree:
             "right": self.print_tree(node.right),
             "height": node.height
         }
-        
-avl_tree = AVLTree()
 
-# numbers = [1, 2, 3, 4, 5, 6, 23, 26, 21, 20, 11]
-characters = ["A", "A" "B", "C", "D", "E", "F", "W", "Z", "U", "T", "K", "I"]
+    """
+    PHƯƠNG THỨC TÌM KIẾM SẢN PHẨM THEO GIÁ TIỀN
+    """
+    def find_phones(self, root, min_price, max_price, results=None):
+        if results is None:
+            results = []
+            
+        if root is None:
+            return results
 
-
-# for num in numbers:
-#     avl_tree.insert(num)
-#     print(json.dumps(avl_tree.print_tree(avl_tree.root), indent = 4))
-
-for c in characters:
-    avl_tree.insert(c)
-    print(json.dumps(avl_tree.print_tree(avl_tree.root), indent = 4))
+        #* Current price larger than minimum price -> traverse to left node
+        if root.key > min_price:
+            self.find_phones(root.left, min_price, max_price, results)
+            
+        #* Current price smaller than maximum price -> traverse to right node
+        if root.key < max_price:
+            self.find_phones(root.right, min_price, max_price, results)
+            
+        #* take out product in the price range
+        if root.key >= min_price and root.key <= max_price:
+            results.extend(root.info) 
+            
+        return results

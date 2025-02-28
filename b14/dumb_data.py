@@ -38,7 +38,8 @@ sample_object = {
     "id": 197216291,
     "name": "Apple iPhone 14 Pro Max",
     "price": 26450000,
-    "category": ""
+    "category": "",
+    "description": ""
 }
 
 # Số lượng data bạn muốn tạo
@@ -52,10 +53,10 @@ for _ in range(num_data):
     new_data = sample_object.copy()
     new_data["id"] = random.randint(1, 1000000000)  # Giá trị ngẫu nhiên cho id
     new_data["name"] = f"{random.choice(sample_names)} {random.randint(1, 5000000)}"
-
-    new_data["price"] = random.randint(1000000, 50000000)  # Giá trị ngẫu nhiên cho price
-    # Giá trị ngẫu nhiên cho original_price
-    new_data["category"] =  f"{random.choice(sample_category)}"
+    new_data["price"] = random.randint(1000, 20000)  # Giá trị ngẫu nhiên cho price
+    new_data["description"] = "Đây là 1 sản phẩm tốt!"
+    new_data["category"] =  f"{random.choice(sample_category)}" # Giá trị ngẫu nhiên cho category
+    
     data_list.append(new_data)
 
 # Đường dẫn đến file JSON để lưu dữ liệu
