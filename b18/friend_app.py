@@ -130,25 +130,4 @@ data = [
     }
 ]
 
-graph = Graph()
-
-for d in data:
-    user = User(**d) # destructuring
-    graph.add_user(user)
     
-graph.add_friend(1, 2)
-graph.add_friend(2, 3)
-graph.add_friend(2, 5)
-graph.add_friend(4, 5)
-
-print(graph)
-
-# for user in graph.get_friends(2):
-#     print(user.fullName)
-
-suggest_id = int(input("Enter suggested friend id: "))
-
-for user in graph.suggest_friends(suggest_id):
-    print(f"{user.id}: {user.fullName}")
-
-

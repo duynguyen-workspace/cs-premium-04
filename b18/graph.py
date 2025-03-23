@@ -59,24 +59,48 @@ class Graph:
             return self.adjacency_list[vertex]
             
     
+    """PHƯƠNG THỨC DUYỆT VERTEX THEO CHIỀU SÂU (DEPTH-FIRST TRAVERSAL)"""
+    def dfs(self, vertex, visited = None):
+        # Khi mới bắt đầu duyệt -> tạo set visited rỗng
+        if visited is None:
+            visited = set()
+
+        visited.add(vertex)
+        
+        # In vertex ra
+        # result += f"{vertex} -> "
+        print(vertex, end=" -> ")
+        
+        neighbors = self.get_neighbor(vertex)
+        
+        # Tìm neighbor của nút hiện tại
+        for neighbor in neighbors:
+            if neighbor not in visited:
+                self.dfs(neighbor, visited)
+    
     # def __str__(self):
     #     return str(self.adjacency_list)
     
 graph = Graph()
 
 # Add nút 1 -> 5
-for v in range(1, 6):
+for v in range(1, 9):
     graph.add_vertex(v)
     
 # Tạo cạnh
 graph.add_edge(1, 2)
 graph.add_edge(2, 3)
-graph.add_edge(2, 4)
-graph.add_edge(3, 4)
-graph.add_edge(4, 5)
+graph.add_edge(2, 6)
+graph.add_edge(3, 7)
+graph.add_edge(3, 8)
+graph.add_edge(7, 5)
+graph.add_edge(8, 5)
+graph.add_edge(5, 6)
+graph.add_edge(6, 4)
 
 print(graph.adjacency_list)
 
-print(graph.get_neighbor(2))
+# print(graph.get_neighbor(2))
 
+graph.dfs(2)
 
