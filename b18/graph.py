@@ -1,4 +1,5 @@
 import json
+from collections import deque
 
 class Graph:
     #? Khởi tạo bằng Hash Table
@@ -77,6 +78,29 @@ class Graph:
         for neighbor in neighbors:
             if neighbor not in visited:
                 self.dfs(neighbor, visited)
+                
+    """PHƯƠNG THỨC DUYỆT VERTEX THEO CHIỀU NGANG (BREADTH-FIRST TRAVERSAL)"""
+    def bfs(self, vertex):
+        # Khi mới bắt đầu duyệt -> tạo set visited rỗng
+        visited = set()
+        
+        # Tạo hàng đợi
+        queue = deque([vertex])
+        queue = [vertex]
+        
+        # Vòng lặp duyệt đồ thị
+        while queue:
+            # curr_vertex = queue.popleft()
+            curr_vertex = queue.pop(0)
+
+            if curr_vertex not in visited:
+                print(f"{curr_vertex}", end=" -> ")
+                visited.add(curr_vertex)
+            
+                # Lấy danh sách nút kề (neighbor) của nút hiện tại
+                for neighbor in self.get_neighbor(curr_vertex):
+                    if neighbor not in visited:
+                        queue.append(neighbor)
     
     # def __str__(self):
     #     return str(self.adjacency_list)
@@ -102,5 +126,7 @@ print(graph.adjacency_list)
 
 # print(graph.get_neighbor(2))
 
-graph.dfs(2)
+# graph.dfs(2)
+
+graph.bfs(2)
 

@@ -1,3 +1,6 @@
+import pygame
+from pygame.locals import *
+
 class Vertex:
     def __init__(self, key, x, y):
         self.key = key
@@ -91,7 +94,9 @@ class Graph:
         
     # def __str__(self):
     #     return str(self.edges_list)
-    
+
+#? KHỞI TẠO ĐỒ THỊ
+
 graph = Graph()
 
 #* BẢN ĐỒ
@@ -254,4 +259,102 @@ for item in map:
     graph.add_map_edge(item['key'], item['nei']) # add cạnh (vertex)
     
 
-print(graph.dfs(3, 23))
+print(graph.dfs(start = 3, end = 23))
+
+# KHỞI TẠO PYGAME
+pygame.init()
+pygame.display.set_caption("MAZE GAME")
+
+# KHỞI TẠO WINDOW
+
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 600
+
+WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+
+# CONSTANTS
+MAP_IMG = pygame.image.load("./img/maze_map.png")
+DOT_IMG = pygame.image.load("./img/dot.png")
+
+DOT_X = 245 # key = 3
+DOT_Y = 15 # key = 3
+
+START = 3
+END = 23
+
+SPEED = 5
+
+#? CLASS DOT
+class Dot:
+    def __init__(self):
+        self.x = DOT_X
+        self.y = DOT_Y
+        self.img = pygame.transform.scale(DOT_IMG, (100, 100))  
+        self.surface = pygame.Surface((100, 100), pygame.SRCALPHA)
+        self.surface.blit(self.img, (0, 0))
+        self.path = graph.dfs(START, END)
+        self.curr_pos = self.path[0]
+        
+    def draw(self):
+        WINDOW.blit(self.surface, (self.x, self.y))
+        
+    def run(self):
+        next_vertex = graph.vertex_list[self.curr_pos]
+        # print(f"Next Vertex: {next_vertex}")
+        
+        # Set điều kiện để di chuyển                
+        if self.x != next_vertex.x or self.y != next_vertex.y:
+            # TH1: đi xuống
+            if self.y < next_vertex.y:
+                self.y += SPEED
+                
+            # TH2: đi lên
+            if self.y > next_vertex.y:
+                self.y -= SPEED  
+        
+            # TH3: đi qua trái
+            if self.x > next_vertex.x:
+                self.x -= SPEED
+                
+            # TH4: đi qua phải
+            if self.x < next_vertex.x:
+                self.x += SPEED
+        else:
+            # Kiểm tra độ dài đường đi (path)
+            if len(self.path) == 0:
+                return
+                
+            self.curr_pos = self.path.pop(0)
+
+# VÒNG LẶP GAME
+
+running = True
+
+start_game = False
+
+dot = Dot()
+
+while running:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            running = False
+            
+        if event.type == KEYDOWN and event.key == K_SPACE:
+            start_game = True
+
+    WINDOW.fill((0, 0, 0))
+    
+    # ĐẶT MAP VÀO ỨNG DỤNG
+    WINDOW.blit(MAP_IMG, (0, 0))
+    
+    # VẼ INSTANCE
+    dot.draw()
+    
+    if start_game:
+        dot.run()
+    
+    # UPDATE TRẠNG THÁI GAME
+    pygame.display.update()
+    pygame.time.Clock().tick(60)
+            
+pygame.quit()
