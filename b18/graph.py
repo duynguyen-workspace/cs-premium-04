@@ -105,6 +105,17 @@ class Graph:
     # def __str__(self):
     #     return str(self.adjacency_list)
     
+    def addRectangleEdges(self):
+        for row in range(6):
+            for col in range(6):
+                current = row * 6 + col
+                # Kiểm tra và thêm cạnh tới đỉnh ở bên phải
+                if col < 6 - 1:
+                    self.addEdge(current, current + 1)
+                # Kiểm tra và thêm cạnh tới đỉnh ở bên dưới
+                if row < 6 - 1:
+                    self.addEdge(current, current + 6)
+    
 graph = Graph()
 
 # Add nút 1 -> 5
