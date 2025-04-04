@@ -77,6 +77,36 @@ class Graph:
         
         return shortest_paths
 
+    """PHƯƠNG THỨC DUYỆT VERTEX THEO CHIỀU NGANG (BREADTH-FIRST TRAVERSAL)"""
+    def find_next_step(self, start, end):
+        if start < 0:
+            return None
+
+        visited = set([start])
+        queue = deque([[start]])
+        
+        # Vòng lặp duyệt đường đi đến vị trí kết thúc
+        while queue:
+            # curr_vertex = queue.popleft()
+            path = queue.popleft()
+            curr_vertex = path[-1]
+            
+            # Lấy danh sách nút kề (neighbor) của nút hiện tại
+            for neighbor in self.adjacency_list[curr_vertex]:
+                if neighbor in visited:
+                    continue
+                
+                new_path = list(path)
+                new_path.append(neighbor)
+                
+                # Kiểm tra đường đi đã đến được nút kết thúc chưa
+                if neighbor == end:
+                    return new_path[1] if len(new_path) > 1 else end
+                    # return new_path
+                
+                # Đường đi chưa kết thúc
+                queue.append(new_path)
+                visited.add(neighbor)
 
 
 #TODO: KHỞI TẠO ĐỒ THỊ MAP CHO GAME MUMMY
@@ -86,4 +116,5 @@ graph.add_rectangle_vertex()
 graph.add_rectangle_edges()
 
 # print(graph.adjacency_list)
-print(graph.find_all_paths(1, 10))
+# print(graph.find_all_paths(1, 10))
+print(graph.find_next_step(29, 1))
